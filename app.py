@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 import pandas as pd
 import pickle
@@ -22,6 +23,7 @@ except Exception as e:
 
 # Initialize Flask application
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Define the home route
 @app.route('/')
