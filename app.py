@@ -21,6 +21,48 @@ try:
 except Exception as e:
     raise RuntimeError(f"Failed to load the lexical diagnosis model: {str(e)}")
 
+# Load the Sequential diagnosis model
+try:
+    with open(os.path.join(models_directory, "sequential_diagnosis_model.pkl"), "rb") as f:
+        sequential_model = pickle.load(f)
+except Exception as e:
+    raise RuntimeError(f"Failed to load the sequential diagnosis model: {str(e)}")
+
+# Load the Visual diagnosis model
+try:
+    with open(os.path.join(models_directory, "visual_diagnosis_model.pkl"), "rb") as f:
+        visual_model = pickle.load(f)
+except Exception as e:
+    raise RuntimeError(f"Failed to load the visual diagnosis model: {str(e)}")
+
+# Load the Ideognostic diagnosis model
+try:
+    with open(os.path.join(models_directory, "ideognostic_diagnosis_model.pkl"), "rb") as f:
+        ideognostic_model = pickle.load(f)
+except Exception as e:
+    raise RuntimeError(f"Failed to load the ideognostic_diagnosis_model diagnosis model: {str(e)}")
+
+# Load the Operational diagnosis model
+try:
+    with open(os.path.join(models_directory, "operational_diagnosis_model.pkl"), "rb") as f:
+        operational_model = pickle.load(f)
+except Exception as e:
+    raise RuntimeError(f"Failed to load the operational diagnosis model: {str(e)}")
+
+# Load the Graphical diagnosis model
+try:
+    with open(os.path.join(models_directory, "graphical_diagnosis_mode.pkl"), "rb") as f:
+        graphical_model = pickle.load(f)
+except Exception as e:
+    raise RuntimeError(f"Failed to load the graphical diagnosis model: {str(e)}")
+
+# Load the Practognostic diagnosis model
+try:
+    with open(os.path.join(models_directory, "practognostic_diagnosis_model.pkl"), "rb") as f:
+        practognostic_model = pickle.load(f)
+except Exception as e:
+    raise RuntimeError(f"Failed to load the practognostic diagnosis model: {str(e)}")
+
 # Initialize Flask application
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -89,6 +131,210 @@ def lexical_predict():
         # Interpret the prediction result (0 for False, 1 for True)
         result = bool(prediction[0])
         message = "Doesn't Have Lexical Dyscalculia" if not result else "Has Lexical Dyscalculia"
+        
+        # Return the result as a JSON response
+        return jsonify({'prediction': result, 'message': message})
+    except KeyError as e:
+        # Handle missing keys in the input JSON
+        print("Missing key in input:", e)  # Debugging: Log error message
+        return jsonify({'error': f"Missing key in input data: {str(e)}"}), 400
+    except Exception as e:
+        # Handle other exceptions
+        print("Error occurred:", e)  # Debugging: Log error message
+        return jsonify({'error': str(e)}), 500
+    
+# Define the route for Sequential model prediction
+@app.route('/sequential', methods=['POST'])
+def sequential_predict():
+    """
+    Endpoint for making predictions using the Sequential diagnosis model.
+    Expects JSON input with features required by the model.
+    """
+    try:
+        # Get JSON data from the request
+        sequential_data = request.json
+        print("Received data:", sequential_data)  # Debugging: Log received data
+
+        # Convert the received data into a DataFrame for model prediction
+        input_data = pd.DataFrame([sequential_data])
+
+        # Make a prediction using the loaded lexical model
+        prediction = sequential_model.predict(input_data)
+        print("Prediction:", prediction)  # Debugging: Log prediction result
+
+        # Interpret the prediction result (0 for False, 1 for True)
+        result = bool(prediction[0])
+        message = "Doesn't Have Sequential Dyscalculia" if not result else "Has Sequential Dyscalculia"
+        
+        # Return the result as a JSON response
+        return jsonify({'prediction': result, 'message': message})
+    except KeyError as e:
+        # Handle missing keys in the input JSON
+        print("Missing key in input:", e)  # Debugging: Log error message
+        return jsonify({'error': f"Missing key in input data: {str(e)}"}), 400
+    except Exception as e:
+        # Handle other exceptions
+        print("Error occurred:", e)  # Debugging: Log error message
+        return jsonify({'error': str(e)}), 500
+    
+# Define the route for Visual model prediction
+@app.route('/visual', methods=['POST'])
+def visual_predict():
+    """
+    Endpoint for making predictions using the Visual diagnosis model.
+    Expects JSON input with features required by the model.
+    """
+    try:
+        # Get JSON data from the request
+        visual_data = request.json
+        print("Received data:", visual_data)  # Debugging: Log received data
+
+        # Convert the received data into a DataFrame for model prediction
+        input_data = pd.DataFrame([visual_data])
+
+        # Make a prediction using the loaded lexical model
+        prediction = visual_model.predict(input_data)
+        print("Prediction:", prediction)  # Debugging: Log prediction result
+
+        # Interpret the prediction result (0 for False, 1 for True)
+        result = bool(prediction[0])
+        message = "Doesn't Have Visual Dyscalculia" if not result else "Has Visual Dyscalculia"
+        
+        # Return the result as a JSON response
+        return jsonify({'prediction': result, 'message': message})
+    except KeyError as e:
+        # Handle missing keys in the input JSON
+        print("Missing key in input:", e)  # Debugging: Log error message
+        return jsonify({'error': f"Missing key in input data: {str(e)}"}), 400
+    except Exception as e:
+        # Handle other exceptions
+        print("Error occurred:", e)  # Debugging: Log error message
+        return jsonify({'error': str(e)}), 500
+    
+# Define the route for Ideognostic model prediction
+@app.route('/ideognostic', methods=['POST'])
+def ideognostic_predict():
+    """
+    Endpoint for making predictions using the Ideognostic diagnosis model.
+    Expects JSON input with features required by the model.
+    """
+    try:
+        # Get JSON data from the request
+        ideognostic_data = request.json
+        print("Received data:", ideognostic_data)  # Debugging: Log received data
+
+        # Convert the received data into a DataFrame for model prediction
+        input_data = pd.DataFrame([ideognostic_data])
+
+        # Make a prediction using the loaded lexical model
+        prediction = ideognostic_model.predict(input_data)
+        print("Prediction:", prediction)  # Debugging: Log prediction result
+
+        # Interpret the prediction result (0 for False, 1 for True)
+        result = bool(prediction[0])
+        message = "Doesn't Have Ideognostic Dyscalculia" if not result else "Has Ideognostic Dyscalculia"
+        
+        # Return the result as a JSON response
+        return jsonify({'prediction': result, 'message': message})
+    except KeyError as e:
+        # Handle missing keys in the input JSON
+        print("Missing key in input:", e)  # Debugging: Log error message
+        return jsonify({'error': f"Missing key in input data: {str(e)}"}), 400
+    except Exception as e:
+        # Handle other exceptions
+        print("Error occurred:", e)  # Debugging: Log error message
+        return jsonify({'error': str(e)}), 500
+    
+# Define the route for Operational model prediction
+@app.route('/operational', methods=['POST'])
+def operational_predict():
+    """
+    Endpoint for making predictions using the Operational diagnosis model.
+    Expects JSON input with features required by the model.
+    """
+    try:
+        # Get JSON data from the request
+        operational_data = request.json
+        print("Received data:", operational_data)  # Debugging: Log received data
+
+        # Convert the received data into a DataFrame for model prediction
+        input_data = pd.DataFrame([operational_data])
+
+        # Make a prediction using the loaded lexical model
+        prediction = operational_model.predict(input_data)
+        print("Prediction:", prediction)  # Debugging: Log prediction result
+
+        # Interpret the prediction result (0 for False, 1 for True)
+        result = bool(prediction[0])
+        message = "Doesn't Have Operational Dyscalculia" if not result else "Has Operational Dyscalculia"
+        
+        # Return the result as a JSON response
+        return jsonify({'prediction': result, 'message': message})
+    except KeyError as e:
+        # Handle missing keys in the input JSON
+        print("Missing key in input:", e)  # Debugging: Log error message
+        return jsonify({'error': f"Missing key in input data: {str(e)}"}), 400
+    except Exception as e:
+        # Handle other exceptions
+        print("Error occurred:", e)  # Debugging: Log error message
+        return jsonify({'error': str(e)}), 500
+    
+# Define the route for Graphical model prediction
+@app.route('/graphical', methods=['POST'])
+def graphical_predict():
+    """
+    Endpoint for making predictions using the Graphical diagnosis model.
+    Expects JSON input with features required by the model.
+    """
+    try:
+        # Get JSON data from the request
+        graphical_data = request.json
+        print("Received data:", graphical_data)  # Debugging: Log received data
+
+        # Convert the received data into a DataFrame for model prediction
+        input_data = pd.DataFrame([graphical_data])
+
+        # Make a prediction using the loaded lexical model
+        prediction = graphical_model.predict(input_data)
+        print("Prediction:", prediction)  # Debugging: Log prediction result
+
+        # Interpret the prediction result (0 for False, 1 for True)
+        result = bool(prediction[0])
+        message = "Doesn't Have Graphical Dyscalculia" if not result else "Has Graphical Dyscalculia"
+        
+        # Return the result as a JSON response
+        return jsonify({'prediction': result, 'message': message})
+    except KeyError as e:
+        # Handle missing keys in the input JSON
+        print("Missing key in input:", e)  # Debugging: Log error message
+        return jsonify({'error': f"Missing key in input data: {str(e)}"}), 400
+    except Exception as e:
+        # Handle other exceptions
+        print("Error occurred:", e)  # Debugging: Log error message
+        return jsonify({'error': str(e)}), 500
+    
+# Define the route for Practognostic model prediction
+@app.route('/practognostic', methods=['POST'])
+def practognostic_predict():
+    """
+    Endpoint for making predictions using the Practognostic diagnosis model.
+    Expects JSON input with features required by the model.
+    """
+    try:
+        # Get JSON data from the request
+        practognostic_data = request.json
+        print("Received data:", practognostic_data)  # Debugging: Log received data
+
+        # Convert the received data into a DataFrame for model prediction
+        input_data = pd.DataFrame([practognostic_data])
+
+        # Make a prediction using the loaded lexical model
+        prediction = practognostic_model.predict(input_data)
+        print("Prediction:", prediction)  # Debugging: Log prediction result
+
+        # Interpret the prediction result (0 for False, 1 for True)
+        result = bool(prediction[0])
+        message = "Doesn't Have Practognostic Dyscalculia" if not result else "Has Practognostic Dyscalculia"
         
         # Return the result as a JSON response
         return jsonify({'prediction': result, 'message': message})
